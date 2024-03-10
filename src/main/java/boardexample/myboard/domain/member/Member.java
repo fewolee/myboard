@@ -1,5 +1,6 @@
 package boardexample.myboard.domain.member;
 
+import boardexample.myboard.global.BaseTimeEntity;
 import boardexample.myboard.global.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Entity
 @AllArgsConstructor
 @Builder
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
