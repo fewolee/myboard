@@ -4,6 +4,7 @@ import boardexample.myboard.domain.member.handler.LoginSuccessJWTProvideHandler;
 import boardexample.myboard.domain.member.service.LoginService;
 import boardexample.myboard.global.login.filter.JsonUsernamePasswordAuthenticationFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +48,7 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/signup,","").permitAll() // 로그인, 회원가입, 메인페이지 허용
+                        .requestMatchers("/login", "/signup,","/").permitAll() // 로그인, 회원가입, 메인페이지 허용
                         .anyRequest().authenticated());
 
         http.addFilterAfter(jsonUsernamePasswordLoginFilter(), LogoutFilter.class);
