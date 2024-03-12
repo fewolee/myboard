@@ -5,6 +5,7 @@ import boardexample.myboard.domain.member.repository.MemberRepository;
 import boardexample.myboard.domain.member.service.LoginService;
 import boardexample.myboard.global.jwt.service.JwtService;
 import boardexample.myboard.global.login.filter.JsonUsernamePasswordAuthenticationFilter;
+import boardexample.myboard.global.login.filter.JwtAuthenticationProcessingFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -77,7 +78,7 @@ public class SecurityConfig {
 
     @Bean
     public LoginSuccessJWTProvideHandler loginSuccessJWTProvideHandler(){
-        return new LoginSuccessJWTProvideHandler();
+        return new LoginSuccessJWTProvideHandler(jwtService, memberRepository);
     }
 
     @Bean
