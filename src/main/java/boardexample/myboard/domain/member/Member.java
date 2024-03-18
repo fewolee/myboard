@@ -55,6 +55,16 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "writer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
 
+    //비밀번호 변경, 회원 탈퇴 시, 비밀번호를 확인하며, 이때 비밀번호의 일치여부를 판단하는 메서드
+    public boolean matchPassword(PasswordEncoder passwordEncoder, String checkPassword){
+        return passwordEncoder.matches(checkPassword, getPassword());
+    }
+
+    //회원가입시, USER의 권한을 부여하는 메서드
+    public void addUserAuthority() {
+        this.role = Role.USER;
+    }
+
 
 
 
