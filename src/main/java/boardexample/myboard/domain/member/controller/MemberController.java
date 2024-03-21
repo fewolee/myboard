@@ -1,8 +1,6 @@
 package boardexample.myboard.domain.member.controller;
 
-import boardexample.myboard.domain.member.dto.MemberInfoDto;
-import boardexample.myboard.domain.member.dto.MemberSignUpDto;
-import boardexample.myboard.domain.member.dto.MemberUpdateDto;
+import boardexample.myboard.domain.member.dto.*;
 import boardexample.myboard.domain.member.service.MemberService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
