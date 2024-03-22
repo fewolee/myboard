@@ -6,11 +6,16 @@ import boardexample.myboard.domain.member.Member;
 import boardexample.myboard.global.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static jakarta.persistence.CascadeType.ALL;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Table(name = "POST")
 @Getter
@@ -18,30 +23,34 @@ import java.util.List;
 @Entity
 public class Post extends BaseTimeEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "post_id")
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "writer_id")
-    private Member writer; // 작성자
+    private Member writer;
 
 
     @Column(length = 40, nullable = false)
-    private String title; // 제목
+    private String title;
 
     @Lob
     @Column(nullable = false)
-    private String content; // 내용
+    private String content;
 
     @Column(nullable = true)
-    private String filePath; // 파일 Url
+    private String filePath;
 
-
+    @Builder
+    public Post(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 
     //== 게시글을 삭제하면 달려있는 댓글 모두 삭제 ==//
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
 
 
@@ -49,6 +58,7 @@ public class Post extends BaseTimeEntity {
 
     //== 연관관계 편의 메서드 ==//
     public void confirmWriter(Member writer) {
+        //writer는 변경이 불가능하므로 이렇게만 해주어도 될듯
         this.writer = writer;
         writer.addPost(this);
     }
@@ -56,6 +66,7 @@ public class Post extends BaseTimeEntity {
         //comment의 Post 설정은 comment에서 함
         commentList.add(comment);
     }
+
 
 
     //== 내용 수정 ==//
